@@ -1,19 +1,45 @@
 package main
 
 import (
+	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/signal"
+	"runtime"
 	"time"
 
 	"github.com/zricethezav/gitleaks/v7/config"
 	"github.com/zricethezav/gitleaks/v7/options"
 	"github.com/zricethezav/gitleaks/v7/scan"
 
+	"github.com/dustin/go-humanize"
 	"github.com/hako/durafmt"
 	log "github.com/sirupsen/logrus"
 )
 
 func main() {
+
+	// state of memory
+	ticker := time.NewTicker(30 * time.Second)
+	go func() {
+		var ms runtime.MemStats
+		for {
+			select {
+			case <-ticker.C:
+				runtime.ReadMemStats(&ms)
+				log.Printf("Mem Sys: %v, HeapAlloc: %v, HeapInuse: %v, HeapIdle: %v, HeapReleased: %v, NextGC: %v\n",
+					humanize.Bytes(ms.Sys), humanize.Bytes(ms.HeapAlloc), humanize.Bytes(ms.HeapInuse), humanize.Bytes(ms.HeapIdle),
+					humanize.Bytes(ms.HeapReleased), humanize.Bytes(ms.NextGC))
+			}
+		}
+
+	}()
+
+	// profile
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
+
 	// this block sets up a go routine to listen for an interrupt signal
 	// which will immediately exit gitleaks
 	stopChan := make(chan os.Signal, 1)
