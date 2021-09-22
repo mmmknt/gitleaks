@@ -39,6 +39,7 @@ func NewRepoScanner(opts options.Options, cfg config.Config, repo *git.Repositor
 
 // Scan kicks of a repo scan
 func (rs *RepoScanner) Scan() (Report, error) {
+	log.Info("start RepoScanner Scan")
 	var (
 		scannerReport Report
 		commits       chan *object.Commit
@@ -60,6 +61,7 @@ func (rs *RepoScanner) Scan() (Report, error) {
 	g.Go(func() error {
 		defer close(commits)
 		err = cIter.ForEach(func(c *object.Commit) error {
+			log.Infof("start cIter target: %s", c.Hash.String())
 			if c == nil || depthReached(commitNum, rs.opts) {
 				return storer.ErrStop
 			}
@@ -69,6 +71,7 @@ func (rs *RepoScanner) Scan() (Report, error) {
 			}
 			commitNum++
 			commits <- c
+			log.Infof("send CommitScanner target: %s", c.Hash.String())
 			if c.Hash.String() == rs.opts.CommitTo {
 				return storer.ErrStop
 			}
@@ -81,8 +84,10 @@ func (rs *RepoScanner) Scan() (Report, error) {
 
 	for commit := range commits {
 		c := commit
+		log.Infof("receive CommitScanner target: %s", c.Hash.String())
 		rs.throttle.Limit()
 		g.Go(func() error {
+			log.Infof("NewCommitScanner target: %s", c.Hash.String())
 			commitScanner := NewCommitScanner(rs.opts, rs.cfg, rs.repo, c)
 			commitScanner.SetRepoName(rs.repoName)
 			report, err := commitScanner.Scan()
