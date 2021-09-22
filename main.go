@@ -67,6 +67,8 @@ func main() {
 	}
 
 	// setup scanner
+	log.Info(opts)
+	log.Info(cfg)
 	scanner, err := scan.NewScanner(opts, cfg)
 	if err != nil {
 		log.Error(err)
