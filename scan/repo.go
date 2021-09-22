@@ -40,7 +40,7 @@ func NewRepoScanner(opts options.Options, cfg config.Config, repo *git.Repositor
 // Scan kicks of a repo scan
 func (rs *RepoScanner) Scan() (Report, error) {
 	log.Info("start RepoScanner Scan")
-	log.Info("Opts. Verbose: %v, Quiet: %v, RepoURL: %v, Path: %v, ConfigPath: %v, RepoConfigPath: %v, " +
+	log.Infof("Opts. Verbose: %v, Quiet: %v, RepoURL: %v, Path: %v, ConfigPath: %v, RepoConfigPath: %v, " +
 		"ClonePath: %v, Version: %v, Username: %v, Threads: %v, Unstaged: %v, Branch: %v, " +
 		"Redact: %v, Debug: %v, NoGit: %v, CodeOnLeak: %v, AppendRepoConfig: %v, AdditionalConfig: %v, " +
 		"Report: %v, ReportFormat: %v, FilesAtCommit: %v, Commit: %v, Commits: %v, CommitsFile: %v, " +
