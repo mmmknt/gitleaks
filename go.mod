@@ -2,7 +2,9 @@ module github.com/zricethezav/gitleaks/v7
 
 go 1.16
 
-replace github.com/go-git/go-git/v5 => github.com/zricethezav/go-git/v5 v5.2.2
+replace github.com/go-git/go-git/v5 => github.com/mmmknt/go-git/v5 v5.2.3
+
+replace github.com/sergi/go-diff => github.com/mmmknt/go-diff v1.1.1
 
 require (
 	github.com/BurntSushi/toml v0.3.1

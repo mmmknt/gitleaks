@@ -40,10 +40,10 @@ func NewRepoScanner(opts options.Options, cfg config.Config, repo *git.Repositor
 // Scan kicks of a repo scan
 func (rs *RepoScanner) Scan() (Report, error) {
 	log.Info("start RepoScanner Scan")
-	log.Infof("Opts. Verbose: %v, Quiet: %v, RepoURL: %v, Path: %v, ConfigPath: %v, RepoConfigPath: %v, " +
-		"ClonePath: %v, Version: %v, Username: %v, Threads: %v, Unstaged: %v, Branch: %v, " +
-		"Redact: %v, Debug: %v, NoGit: %v, CodeOnLeak: %v, AppendRepoConfig: %v, AdditionalConfig: %v, " +
-		"Report: %v, ReportFormat: %v, FilesAtCommit: %v, Commit: %v, Commits: %v, CommitsFile: %v, " +
+	log.Infof("Opts. Verbose: %v, Quiet: %v, RepoURL: %v, Path: %v, ConfigPath: %v, RepoConfigPath: %v, "+
+		"ClonePath: %v, Version: %v, Username: %v, Threads: %v, Unstaged: %v, Branch: %v, "+
+		"Redact: %v, Debug: %v, NoGit: %v, CodeOnLeak: %v, AppendRepoConfig: %v, AdditionalConfig: %v, "+
+		"Report: %v, ReportFormat: %v, FilesAtCommit: %v, Commit: %v, Commits: %v, CommitsFile: %v, "+
 		"CommitFrom: %v, CommitTo: %v, CommitSince: %v, CommitUntil: %v, Depth: %v",
 		rs.opts.Verbose, rs.opts.Quiet, rs.opts.RepoURL, rs.opts.Path, rs.opts.ConfigPath, rs.opts.RepoConfigPath,
 		rs.opts.ClonePath, rs.opts.Version, rs.opts.Username, rs.opts.Threads, rs.opts.Unstaged, rs.opts.Branch,
